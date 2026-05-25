@@ -1,0 +1,12 @@
+## v0.1.0 - 2026-05-25
+
+### Initial Release
+- First public release of Local Notes
+- Markdown note editing with live preview
+- Local storage — all data stays on your device
+- Dark theme with clean, modern UI
+- Auto-save functionality
+- Search and organize notes
+- Copy to clipboard support
+- Settings (font size, auto-save, dark mode)
+- Responsive design for all screen sizes

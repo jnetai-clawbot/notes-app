@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#1a1a2e">
+    <title>Local Notes</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+
+        <!-- Header -->
+        <header class="header">
+            <div class="header-title">
+                <button class="btn-icon" id="menuBtn" aria-label="Toggle menu">☰</button>
+                <div class="logo-icon">✎</div>
+                <h1>Local Notes</h1>
+            </div>
+            <div class="header-actions">
+                <button class="btn-icon" id="settingsBtn" aria-label="Settings" title="Settings">⚙</button>
+                <button class="btn-icon" id="aboutBtn" aria-label="About" title="About">ℹ</button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="main-content">
+
+            <!-- Sidebar -->
+            <aside class="sidebar" id="sidebar">
+                <div class="sidebar-header">
+                    <h2>Notes</h2>
+                    <span id="noteCount" style="font-size:12px;color:var(--text-muted)">0 notes</span>
+                </div>
+                <div class="sidebar-search">
+                    <input type="text" id="searchInput" placeholder="Search notes..." autocomplete="off">
+                </div>
+                <div class="note-list" id="noteList">
+                    <div style="padding:20px;text-align:center;color:var(--text-muted);font-size:13px;">
+                        Loading...
+                    </div>
+                </div>
+                <div class="sidebar-footer">
+                    <button class="btn-new-note" id="newNoteBtn">
+                        + New Note
+                    </button>
+                </div>
+            </aside>
+
+            <!-- Editor Panel -->
+            <main class="editor-panel">
+
+                <!-- Empty State -->
+                <div class="empty-state" id="emptyState">
+                    <div class="empty-icon">✎</div>
+                    <h3>Welcome to Local Notes</h3>
+                    <p>Your notes are stored locally on this device. No data is sent anywhere.</p>
+                    <p style="margin-top:16px;">
+                        <button class="btn btn-primary" onclick="app.createNewNote()" style="padding:12px 24px;font-size:16px;">
+                            + Create Your First Note
+                        </button>
+                    </p>
+                </div>
+
+                <!-- Editor Area -->
+                <div id="editorArea" style="display:none;flex-direction:column;flex:1;overflow:hidden;">
+
+                    <!-- Toolbar -->
+                    <div class="editor-toolbar">
+                        <div class="editor-toolbar-left">
+                            <div class="tab-group">
+                                <button class="tab-btn active" id="tabEdit">Edit</button>
+                                <button class="tab-btn" id="tabPreview">Preview</button>
+                            </div>
+                        </div>
+                        <div class="editor-toolbar-right">
+                            <button class="toolbar-btn" id="saveBtn" title="Save (Ctrl+S)">💾 Save</button>
+                            <button class="toolbar-btn" onclick="app.copyNoteContent()" title="Copy content">📋 Copy</button>
+                            <button class="toolbar-btn danger" id="deleteBtn" title="Delete note">🗑 Delete</button>
+                        </div>
+                    </div>
+
+                    <!-- Title input -->
+                    <input type="text" id="noteTitle" placeholder="Note title..." autocomplete="off">
+
+                    <!-- Content -->
+                    <div style="flex:1;display:flex;overflow:hidden;">
+                        <textarea id="noteContent" placeholder="Write your note in Markdown...
+
+# Heading
+**Bold** *Italic*
+- List item
+`code`
+> Quote
+
+Start writing..." spellcheck="false"></textarea>
+                        <div id="previewPane"></div>
+                    </div>
+
+                </div>
+
+            </main>
+
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <!-- Settings Modal -->
+    <div class="modal-overlay" id="settingsModal">
+        <div class="modal">
+            <h2>Settings</h2>
+            <div class="modal-body">
+
+                <div class="setting-group">
+                    <label>Font Size</label>
+                    <input type="range" id="fontSizeSlider" min="12" max="24" step="1" value="16">
+                    <div class="setting-value" id="fontSizeValue">16px</div>
+                </div>
+
+                <div class="setting-toggle">
+                    <div>
+                        <div class="toggle-label">Auto-Save</div>
+                        <div class="toggle-desc">Automatically save notes every few seconds</div>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="autoSaveToggle" checked>
+                        <div class="toggle-track">
+                            <div class="toggle-thumb"></div>
+                        </div>
+                    </label>
+                </div>
+
+                <div class="setting-toggle">
+                    <div>
+                        <div class="toggle-label">Dark Mode</div>
+                        <div class="toggle-desc">Use dark color scheme</div>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="darkModeToggle" checked>
+                        <div class="toggle-track">
+                            <div class="toggle-thumb"></div>
+                        </div>
+                    </label>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary modal-close-btn">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Modal -->
+    <div class="modal-overlay" id="aboutModal">
+        <div class="modal">
+            <div class="about-section">
+                <div class="about-icon">✎</div>
+                <h3>Local Notes</h3>
+                <div class="version" id="versionDisplay">Version 0.1.0</div>
+                <div class="made-by">
+                    Made by <a href="https://jnetai.com" target="_blank">jnetai.com</a>
+                </div>
+                <p style="font-size:13px;color:var(--text-secondary);">
+                    A private markdown notes app for Android. All data stays on your device.
+                </p>
+
+                <div class="about-actions">
+                    <button id="checkUpdateBtn">
+                        🔄 Check for Update
+                    </button>
+                    <button id="shareAppBtn">
+                        📤 Share App
+                    </button>
+                </div>
+            </div>
+            <div class="modal-footer" style="margin-top:16px;">
+                <button class="btn btn-secondary modal-close-btn">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
