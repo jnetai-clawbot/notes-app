@@ -15,5 +15,6 @@
     <color name="warning">#ff9800</color>
     <color name="error">#f44336</color>
     <color name="white">#ffffff</color>
+    <color name="background_dark">#1a1a2e</color>
     <color name="black">#000000</color>
 </resources>
