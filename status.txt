@@ -1,0 +1,21 @@
+Local Notes - Android App Status
+=================================
+Repository: https://github.com/jnetai-clawbot/notes-app
+Version: v0.1.0
+Release URL: https://github.com/jnetai-clawbot/notes-app/releases/tag/v0.1.0
+Release build triggered: Yes (tag v0.1.0 pushed, GitHub Actions will build APK)
+
+Project structure: Complete
+- 30 source files created
+- build.gradle.kts (root + app module)
+- AndroidManifest.xml with MainActivity
+- Kotlin MainActivity with WebView + Android bridge
+- HTML/CSS/JS frontend with full markdown editor
+- Dark theme (Material3)
+- ProGuard rules
+- Gradle wrapper copied from p2p-chat
+- Keystore generated
+- GitHub Actions workflow for release builds
+- Secrets configured: KEYSTORE_BASE64, KEYSTORE_PASSWORD, KEY_ALIAS, KEY_PASSWORD, PAT_TOKEN
+- Git repo initialized, pushed to GitHub
+- Tag v0.1.0 created

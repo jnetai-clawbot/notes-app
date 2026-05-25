@@ -18,6 +18,9 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
       - name: Decode keystore
         run: |
           echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > notes-app.keystore
@@ -26,6 +29,10 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build APK with Gradle
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
         run: ./gradlew assembleRelease
 
       - name: Rename APK
@@ -35,7 +42,8 @@ jobs:
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
+          tag_name: ${{ github.ref_name }}
+          name: Release ${{ github.ref_name }}
           files: notes-app.apk
-          generate_release_notes: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+          generate_release_notes: false
+          token: ${{ secrets.PAT_TOKEN }}

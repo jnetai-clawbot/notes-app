@@ -19,10 +19,10 @@ android {
 
     signingConfigs {
         create("release") {
-            storeFile = file("notes-app.keystore")
-            storePassword = "N0tesAppK3y!"
-            keyAlias = "notesapp"
-            keyPassword = "N0tesAppK3y!"
+            storeFile = rootProject.file("notes-app.keystore")
+            storePassword = System.getenv("KEYSTORE_PASSWORD") ?: "N0tesAppK3y!"
+            keyAlias = System.getenv("KEY_ALIAS") ?: "notesapp"
+            keyPassword = System.getenv("KEY_PASSWORD") ?: "N0tesAppK3y!"
         }
     }
 
